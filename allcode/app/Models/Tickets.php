@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tickets extends Model
 {
+    protected $guarded = [];
     use HasFactory;
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+    public function course(){
+        return $this->belongsTo(Cources::class);
+    }
 }

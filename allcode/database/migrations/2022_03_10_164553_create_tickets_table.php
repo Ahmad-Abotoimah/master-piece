@@ -15,10 +15,22 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('course_id');
-            $table->bigInteger('user_id');
-            $table->bigInteger('notes');
-            $table->timestamps();
+            $table->bigInteger('course_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->string('notes')->nullable();
+            $table->string('status')->default('pending');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreign('course_id')
+                ->references('id')
+                ->on('cources')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
     }
 

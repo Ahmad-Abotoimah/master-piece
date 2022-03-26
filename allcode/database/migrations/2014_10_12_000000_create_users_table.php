@@ -26,7 +26,8 @@ return new class extends Migration
             $table->string('status')->default('active');
             $table->string('role')->default('user');
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
     }
 

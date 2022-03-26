@@ -26,95 +26,105 @@
 
 </head>
 <body class="loading" data-layout="detached" data-layout-config='{"leftSidebarCondensed":false,"darkMode":false, "showRightSidebarOnStart": true}'>
-<!-- Signup modal-->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signup-modal">Sign Up Modal</button>
-<div id="signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-body">
-                <div class="text-center mt-2 mb-4">
-                    <a href="index.html" class="text-success">
-                        <span><img src="assets/images/logo-dark.png" alt="" height="18"></span>
-                    </a>
-                </div>
-
-                <form class="ps-3 pe-3" action="#">
-
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Name</label>
-                        <input class="form-control" type="email" id="username" required="" placeholder="Michael Zenaty">
+    <div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center mt-2 mb-4">
+                        <a href="index.html" class="text-success">
+                            <span><img src="assets/images/logo-dark.png" alt="" height="18"></span>
+                        </a>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="emailaddress" class="form-label">Email address</label>
-                        <input class="form-control" type="email" id="emailaddress" required="" placeholder="john@deo.com">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input class="form-control" type="password" required="" id="password" placeholder="Enter your password">
-                    </div>
-
-                    <div class="mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="customCheck1">
-                            <label class="form-check-label" for="customCheck1">I accept <a href="#">Terms and Conditions</a></label>
+    
+                    <form method="POST" action="{{ route('login') }}">
+                       @csrf
+                        <div class="mb-3">
+                            <label for="emailaddress1" class="form-label">Email address</label>
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                         </div>
-                    </div>
-
-                    <div class="mb-3 text-center">
-                        <button class="btn btn-primary" type="submit">Sign Up Free</button>
-                    </div>
-
-                </form>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- Login modal -->
-<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#login-modal">Log In Modal</button>
-<div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="text-center mt-2 mb-4">
-                    <a href="index.html" class="text-success">
-                        <span><img src="assets/images/logo-dark.png" alt="" height="18"></span>
-                    </a>
-                </div>
-
-                <form action="#" class="ps-3 pe-3">
-
-                    <div class="mb-3">
-                        <label for="emailaddress1" class="form-label">Email address</label>
-                        <input class="form-control" type="email" id="emailaddress1" required="" placeholder="john@deo.com">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="password1" class="form-label">Password</label>
-                        <input class="form-control" type="password" required="" id="password1" placeholder="Enter your password">
-                    </div>
-
-                    <div class="mb-3">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="customCheck2">
-                            <label class="form-check-label" for="customCheck2">Remember me</label>
+    
+                        <div class="mb-3">
+                            <label for="password1" class="form-label">Password</label>
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                         </div>
+    
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+    
+                                <label class="form-check-label" for="customCheck2">Remember me</label>
+                            </div>
+                        </div>
+    
+                        <div class="mb-3 text-center">
+                            <button class="btn rounded-pill btn-primary" type="submit">Sign In</button>
+                        </div>
+                        @if (Route::has('password.request'))
+                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                            {{ __('Forgot Your Password?') }}
+                        </a>
+                    @endif
+                    </form>
+    
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+    
+                <div class="modal-body">
+                    <div class="text-center mt-2 mb-4">
+                        <a href="index.html" class="text-success">
+                            <span><img src="assets/images/logo-dark.png" alt="" height="18"></span>
+                        </a>
                     </div>
-
-                    <div class="mb-3 text-center">
-                        <button class="btn rounded-pill btn-primary" type="submit">Sign In</button>
-                    </div>
-
-                </form>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    
+                    <form class="ps-3 pe-3" action="#">
+    
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Name</label>
+                            <input class="form-control" type="email" id="username" required="" placeholder="Michael Zenaty">
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="emailaddress" class="form-label">Email address</label>
+                            <input class="form-control" type="email" id="emailaddress" required="" placeholder="john@deo.com">
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input class="form-control" type="password" required="" id="password" placeholder="Enter your password">
+                        </div>
+    
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="customCheck1">
+                                <label class="form-check-label" for="customCheck1">I accept <a href="#">Terms and Conditions</a></label>
+                            </div>
+                        </div>
+    
+                        <div class="mb-3 text-center">
+                            <button class="btn btn-primary" type="submit">Sign Up Free</button>
+                        </div>
+    
+                    </form>
+    
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 @include('sweetalert::alert')
         <div class="content-page">
             <div class="content">
@@ -122,7 +132,37 @@
                 <div class="header-area">
                     <div class="logo"> <a href="/" style="text-decoration: none;color: var(--main--color)"> TechTech</a> </div>
                     <ul class="links">
-                        <li> <a href="landing.html" class="active position-relative" style="top: 0">Home</a> </li>
+                        <li> <a href="/" class="active position-relative" style="top: 0">Home</a> </li>
+                        <li> <a href="/About" class="active position-relative" style="top: 0">About</a> </li>
+                        <li> <a href="/singleCourse" class="active position-relative" style="top: 0">courses</a> </li>
+                        @if(auth()->user())
+                    <li> <a href="/userProfile" class="active position-relative" style="top: 0">Profile</a> </li>
+                    @endif
+                        <!-- Signup modal-->
+
+
+              @if(!auth()->user())
+                        <li> 
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signup-modal">Sign Up</button>
+                        </li>
+                        <li> <!-- Login modal -->
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#login-modal">Log In </button>      
+                                             </li>
+                                             @else
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+            
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+            
+                            @endif
                     </ul>
                 </div>
                 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
@@ -232,7 +272,7 @@
                                                         <p class="text-sm lh-150">{{$course->course_end_date}}</p>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <button class="btn btn-info mt-2"><a href="{{route('ticket.show',$course->id)}}" style="color: #fff"> Join Now</a> </button>
+                                                        <button class="btn btn-info mt-2"><a href="{{route('ticket.show',$course->id)}}" style="color: #fff"> Request To join Now</a> </button>
                                                     </div>
                                                 </div>
                                             </div>

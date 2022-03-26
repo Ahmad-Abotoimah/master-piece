@@ -17,11 +17,10 @@ class adminAuth
      *
      * @param Request $request
      * @param  Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return RedirectResponse
      */
-    public function handle(Request $request, Closure $next): RedirectResponse
+    public function handle(Request $request, Closure $next)
     {
-
+             
         if(auth()->user()->role!=='admin'){
             Alert::error('Failed', 'You are not Authorised');
             return back();

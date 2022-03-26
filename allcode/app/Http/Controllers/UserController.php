@@ -131,7 +131,7 @@ class UserController extends Controller
         $user->major = $request->major;
         $user->save();
         if ($user) {
-            Alert::success('Success', 'You\'ve Successfully update on courses');
+            Alert::success('Success', 'You\'ve Successfully update on user');
             return redirect('user');
         } else {
             Alert::error('Failed', 'update failed');

@@ -8,6 +8,7 @@ use App\Models\Cources;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserAPIController extends Controller
 {
@@ -18,7 +19,7 @@ class UserAPIController extends Controller
      */
     public function index()
     {
-        $users = User::all()->where('role','user');
+        $users = User::all()->where('role', 'user');
         return UsersResource::collection($users);
     }
 
@@ -43,12 +44,12 @@ class UserAPIController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password =Hash::make($request->password);
+        $user->password = Hash::make($request->password);
         $user->phone = $request->phone;
         $user->date_of_birth = $request->date_of_birth;
         $user->major = $request->major;
         $user->save();
-        if($user->save()){
+        if ($user->save()) {
             return new  UsersResource($user);
         }
         return  abort(404);
@@ -64,7 +65,7 @@ class UserAPIController extends Controller
     {
         $user = User::findOrFail($id);
         return new UsersResource($user);
-     }
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -86,7 +87,26 @@ class UserAPIController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $file = $request->img;
+        $new_file = time() . $file->getClientOriginalName();
+        $file->move('assets/images/users', $new_file);
+        $pathOf = 'assets/images/users/' . $new_file;
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->img = $pathOf;
+        $user->phone = $request->phone;
+        $user->date_of_birth = $request->date_of_birth;
+        $user->major = $request->major;
+        $user->save();
+        if ($user) {
+            Alert::success('Success', 'You\'ve Successfully update on user');
+            return redirect('userProfile');
+        } else {
+            Alert::error('Failed', 'update failed');
+            return redirect('userProfile');
+        }
     }
 
     /**

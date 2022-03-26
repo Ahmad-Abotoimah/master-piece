@@ -35,6 +35,106 @@
 </head>
 
 <body>
+    <div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center mt-2 mb-4">
+                        <a href="index.html" class="text-success">
+                            <span><img src="assets/images/logo-dark.png" alt="" height="18"></span>
+                        </a>
+                    </div>
+    
+                    <form method="POST" action="{{ route('login') }}">
+                       @csrf
+                        <div class="mb-3">
+                            <label for="emailaddress1" class="form-label">Email address</label>
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="password1" class="form-label">Password</label>
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        </div>
+    
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+    
+                                <label class="form-check-label" for="customCheck2">Remember me</label>
+                            </div>
+                        </div>
+    
+                        <div class="mb-3 text-center">
+                            <button class="btn rounded-pill btn-primary" type="submit">Sign In</button>
+                        </div>
+                        @if (Route::has('password.request'))
+                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                            {{ __('Forgot Your Password?') }}
+                        </a>
+                    @endif
+                    </form>
+    
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+    
+                <div class="modal-body">
+                    <div class="text-center mt-2 mb-4">
+                        <a href="index.html" class="text-success">
+                            <span><img src="assets/images/logo-dark.png" alt="" height="18"></span>
+                        </a>
+                    </div>
+    
+                    <form class="ps-3 pe-3" action="#">
+    
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Name</label>
+                            <input class="form-control" type="email" id="username" required="" placeholder="Michael Zenaty">
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="emailaddress" class="form-label">Email address</label>
+                            <input class="form-control" type="email" id="emailaddress" required="" placeholder="john@deo.com">
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input class="form-control" type="password" required="" id="password" placeholder="Enter your password">
+                        </div>
+    
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="customCheck1">
+                                <label class="form-check-label" for="customCheck1">I accept <a href="#">Terms and Conditions</a></label>
+                            </div>
+                        </div>
+    
+                        <div class="mb-3 text-center">
+                            <button class="btn btn-primary" type="submit">Sign Up Free</button>
+                        </div>
+    
+                    </form>
+    
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    
 @include('sweetalert::alert')
     <!-- START SETTINGS -->
     <div class="settings-box" id="setting-box">
@@ -71,22 +171,50 @@
             <div class="header-area">
                 <div class="logo">TechTech</div>
                 <ul class="links">
-                    <li> <a href="#" class="active">Home</a> </li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#skills">Technologies</a></li>
-                    <li><a href="#projects">Latest Courses</a></li>
-                    <li><a href="singleCourse">Courses</a></li>
+                    <li> <a href="/" class="active position-relative" style="top: 0">Home</a> </li>
+                    <li> <a href="/About" class="active position-relative" style="top: 0">About</a> </li>
+                    <li> <a href="/singleCourse" class="active position-relative" style="top: 0">courses</a> </li>
+                    @if(auth()->user())
+                    <li> <a href="/userProfile" class="active position-relative" style="top: 0">Profile</a> </li>
+                    @endif
+                    @if(auth()->user()&&auth()->user()->role=='admin')
+                    <li> <a href="/home" class="active position-relative" style="top: 0">Dashboard</a> </li>
+                    @endif
+                    <!-- Signup modal-->
 
+
+          @if(!auth()->user())
+                    <li> 
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signup-modal">Sign Up</button>
+                    </li>
+                    <li> <!-- Login modal -->
+                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#login-modal">Log In </button>                           </li>
+                        @else
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+        
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+        
+                   
+                        @endif
                 </ul>
             </div>
+            <div class="intro">
+                <h1>We are <span class="specific">Ready</span> To Teach</h1>
+                <p class="qoute">Contact <span class="specific">Us</span> To Learn <span class="specific">Everything</span>
+                    AS <span class="specific">The World</span> Need <span class="specific">We</span> Decided <span
+                        class="specific">To Lead</span> </p>
+            </div>
         </div>
-        <div class="intro">
-            <h1>We are <span class="specific">Ready</span> To Teach</h1>
-            <p class="qoute">Contact <span class="specific">Us</span> To Learn <span class="specific">Everything</span>
-                AS <span class="specific">The World</span> Need <span class="specific">We</span> Decided <span
-                    class="specific">To Lead</span> </p>
-        </div>
+     
     </div>
 
     <!-- end landing page  -->
@@ -476,8 +604,8 @@
     </div>
     </div>
     <!-- end projects section -->
-    <footer class="py-3 my-4">
-        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+    <footer class="py-3 my-4" >
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3" style="margin-top: 20vh">
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
             <li class="nav-item"><a href="#about" class="nav-link px-2 text-muted">About</a></li>
             <li class="nav-item"><a href="#services" class="nav-link px-2 text-muted">Services</a></li>

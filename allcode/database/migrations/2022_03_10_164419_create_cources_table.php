@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('course_start_date');
             $table->string('course_end_date');
             $table->string('course_seats');
+            $table->string('type')->default('adults');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });

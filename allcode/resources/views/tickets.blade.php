@@ -1,7 +1,7 @@
 
 @extends('layouts.admin')
 @section('title')
-    <h4 class="page-title">Users</h4>
+    <h4 class="page-title"> Tickets </h4>
 @endsection
 @section('admin')
     <style>
@@ -31,22 +31,22 @@
                                     <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog-outline"></i></button>
                                 </a>
                                 <span class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                                <a class="dropdown-item" href="{{ route('user.show',5) }}">
+                                                <a class="dropdown-item" href="{{ route('filterTickets',5) }}">
                                                       5
                                                 </a>
-                                                <a class="dropdown-item" href="{{ route('user.show',10) }}">
+                                                <a class="dropdown-item" href="{{ route('filterTickets',10) }}">
                                                       10
                                                 </a>
-                                                <a class="dropdown-item" href="{{ route('user.show',20) }}">
+                                                <a class="dropdown-item" href="{{ route('filterTickets',20) }}">
                                                       20
                                                 </a>
-                                                <a class="dropdown-item" href="{{ route('user.show',50) }}">
+                                                <a class="dropdown-item" href="{{ route('filterTickets',50) }}">
                                                       50
                                                 </a>
-                                                <a class="dropdown-item" href="{{ route('user.show',100) }}">
+                                                <a class="dropdown-item" href="{{ route('filterTickets',100) }}">
                                                       100
                                                 </a>
-                                                <a class="dropdown-item" href="{{ route('user.show','all') }}">
+                                                <a class="dropdown-item" href="{{ route('filterTickets','all') }}">
                                                       all
                                                 </a>
 
@@ -71,58 +71,56 @@
                                 {{--                                                </div>--}}
                                 {{--                                            </th>--}}
                                 <th>#</th>
-                                <th class="all">user</th>
-                                <th>email</th>
-                                <th>phone</th>
-                                <th>Date Of Birth</th>
-                                <th>Major</th>
-                                <th>Status</th>
-                                <th>Created At</th>
+                                <th class="all">User</th>
+                                <th>Course</th>
+                                <th>Created at </th>
+                                <th>status</th>
                                 <th style="width: 85px;">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($users as $user)
+                            @foreach($tickets as $ticket)
                                 <tr>
-                                    <td>{{$user->id}}</td>
+                                    <td>{{$ticket->id}}</td>
                                     <td>
-                                        <img src={{"assets/images/userAvatar.png"}} alt="contact-img" title="contact-img" class="rounded me-3" height="48" />
+                                       
                                         <p class="m-0 d-inline-block align-middle font-16">
-                                            <span>{{$user->name}}</span>
+                                            <span>{{$ticket->user_id}}</span>
                                         </p>
                                     </td>
                                     <td>
-                                        {{$user->email}}
+                                        {{$ticket->course_id}}
                                     </td>
                                     <td>
-                                        {{$user->phone?$user->phone:'not added'}}
+                                        {{$ticket->created_at}}
                                     </td>
                                     <td>
-                                        {{$user->date_of_birth?$user->date_of_birth:"not added"}}
+                                        {{$ticket->status}}
                                     </td>
 
-                                    <td>
-                                        {{$user->major?$user->major:"student"}}
-                                    </td>
-                                    <td>
-                                        {{$user->Status?$user->status:"active"}}
-                                    </td>
-                                    <td>
-                                        {{$user->created_at?$user->created_at:today}}
-                                    </td>
+                                   
 
                                     {{--                                            <td>--}}
                                     {{--                                                <span class="badge bg-success">Active</span>--}}
                                     {{--                                            </td>--}}
 
                                     <td class="table-action">
-                                        <a href="{{route('user.edit',$user->id)}}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                        <div class="btn-group">
+                                        <form action="{{route('updateTickets',$ticket->id)}}" method="put">
+                                               <input type="hidden" value="accepted" name="status">
+                                               <button type="submit"  class="btn btn-primary"> Accept </button>
+                                        </form>
+                                        <form action="{{route('updateTickets',$ticket->id)}}" method="put">
+                                               <input type="hidden" value="refused" name="status">
+                                               <button  type="submit" class="btn btn-warning"> Refuse </button>
+                                        </form>
 
-                                        <form method="post" action="{{route('user.destroy',$user->id)}}">
+                                        <form method="post" action="{{route('ticket.destroy',$ticket->id)}}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" style="border: 0;background-color:#fff;"><i class="mdi mdi-delete"></i></button>
+                                            <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
+                                    </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -148,44 +146,33 @@
                 {{--                                                </div>--}}
                 {{--                                            </th>--}}
                 <th>#</th>
-                <th class="all">user</th>
-                <th>email</th>
-                <th>phone</th>
-                <th>Date Of Birth</th>
-                <th>Major</th>
-                <th>Status</th>
-                <th>Created At</th>
+                <th class="all">User</th>
+                <th>Course</th>
+                <th>Created at </th>
+                <th>status</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($users as $user)
+            @foreach($tickets as $ticket)
                 <tr>
-                    <td>{{$user->id}}</td>
+                    <td>{{$ticket->id}}</td>
                     <td>
-                        <img src={{"assets/images/userAvatar.png"}} alt="contact-img" title="contact-img" class="rounded me-3" height="48" />
+                       
                         <p class="m-0 d-inline-block align-middle font-16">
-                            <span>{{$user->name}}</span>
+                            <span>{{$ticket->user_id}}</span>
                         </p>
                     </td>
                     <td>
-                        {{$user->email}}
+                        {{$ticket->course_id}}
                     </td>
                     <td>
-                        {{$user->phone?$user->phone:'not added'}}
+                        {{$ticket->created_at}}
                     </td>
                     <td>
-                        {{$user->date_of_birth?$user->date_of_birth:"not added"}}
+                        {{$ticket->status}}
                     </td>
 
-                    <td>
-                        {{$user->major?$user->major:"student"}}
-                    </td>
-                    <td>
-                        {{$user->Status?$user->status:"active"}}
-                    </td>
-                    <td>
-                        {{$user->created_at?$user->created_at:today}}
-                    </td>
+                   
 
                     {{--                                            <td>--}}
                     {{--                                                <span class="badge bg-success">Active</span>--}}

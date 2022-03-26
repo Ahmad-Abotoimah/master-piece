@@ -30,9 +30,9 @@
     <div class="container-fluid">
 
         <!-- LOGO -->
-        <a href="index.html" class="topnav-logo">
-                    <span class="topnav-logo-lg">
-                        <img src="assets/images/logo-light.png" alt="" height="16">
+        <a href="/home" class="topnav-logo">
+                    <span class="topnav-logo-lg u-font-open-sans" style="text-decoration: none;color: var(--main--color);font-weight:bold;font-size:x-large">
+                        TechTech
                     </span>
             <span class="topnav-logo-sm">
                         <img src="assets/images/logo_sm.png" alt="" height="16">
@@ -55,59 +55,7 @@
 
 
 
-            <li class="dropdown notification-list d-none d-sm-inline-block">
-                <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <i class="dripicons-view-apps noti-icon"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg p-0">
-
-                    <div class="p-2">
-                        <div class="row g-0">
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="assets/images/brands/slack.png" alt="slack">
-                                    <span>Slack</span>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="assets/images/brands/github.png" alt="Github">
-                                    <span>GitHub</span>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="assets/images/brands/dribbble.png" alt="dribbble">
-                                    <span>Dribbble</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="row g-0">
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="assets/images/brands/bitbucket.png" alt="bitbucket">
-                                    <span>Bitbucket</span>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="assets/images/brands/dropbox.png" alt="dropbox">
-                                    <span>Dropbox</span>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <a class="dropdown-icon-item" href="#">
-                                    <img src="assets/images/brands/g-suite.png" alt="G Suite">
-                                    <span>G Suite</span>
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </li>
+           
 
             <li class="notification-list">
                 <a class="nav-link end-bar-toggle" href="javascript: void(0);">
@@ -129,34 +77,11 @@
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown" aria-labelledby="topbar-userdrop">
                     <!-- item-->
                     <div class=" dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">Welcome !</h6>
+                        <h6 class="text-overflow m-0">Welcome {{auth()->user()->name}}  !</h6>
                     </div>
 
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="mdi mdi-account-circle me-1"></i>
-                        <span>My Account</span>
-                    </a>
 
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="mdi mdi-account-edit me-1"></i>
-                        <span>Settings</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="mdi mdi-lifebuoy me-1"></i>
-                        <span>Support</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="mdi mdi-lock-outline me-1"></i>
-                        <span>Lock Screen</span>
-                    </a>
-
-                    <!-- item-->
+                    
                     <a class="dropdown-item notify-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -195,8 +120,8 @@
 
             <div class="leftbar-user">
                 <a href="javascript: void(0);">
-                    <img src="assets/images/users/avatar-1.jpg" alt="user-image" height="42" class="rounded-circle shadow-sm">
-                    <span class="leftbar-user-name">Dominic Keller</span>
+                    <img src="assets/images/userAvatar.png" alt="user-image" height="42" class="rounded-circle shadow-sm">
+                    <span class="leftbar-user-name">{{auth()->user()->name}}</span>
                 </a>
             </div>
 
@@ -212,14 +137,29 @@
                         <span> Dashboard </span>
                     </a>
                     <a  href="/course" aria-expanded="false" class="side-nav-link">
-                        <i class="mdi mdi-alpha-c-circle-outline"></i>
+                        <i class="mdi mdi-book-alert"></i>
 {{--                        <span class="badge bg-info rounded-pill float-end">4</span>--}}
                         <span> courses </span>
                     </a>
                     <a  href="/user" aria-expanded="false" class="side-nav-link">
-                        <i class="mdi mdi-alpha-c-circle-outline"></i>
+                        <i class="mdi  dripicons-user"></i>
 {{--                        <span class="badge bg-info rounded-pill float-end">4</span>--}}
                         <span> Users </span>
+                    </a>
+                    <a  href="/admin" aria-expanded="false" class="side-nav-link">
+                        <i class="mdi dripicons-user-group"></i>
+{{--                        <span class="badge bg-info rounded-pill float-end">4</span>--}}
+                        <span> admins </span>
+                    </a>
+                    <a  href="/ticket" aria-expanded="false" class="side-nav-link">
+                        <i class="mdi mdi-ticket"></i>
+{{--                        <span class="badge bg-info rounded-pill float-end">4</span>--}}
+                        <span> Tickets </span>
+                    </a>
+                    <a  href="/" aria-expanded="false" class="side-nav-link">
+                        <i class="mdi mdi-web-clock"></i>
+{{--                        <span class="badge bg-info rounded-pill float-end">4</span>--}}
+                        <span> Public Website </span>
                     </a>
                 </li>
 

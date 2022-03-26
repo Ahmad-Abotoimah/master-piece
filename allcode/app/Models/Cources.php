@@ -9,4 +9,10 @@ class Cources extends Model
 {
     protected $guarded = [];
     use HasFactory;
+    public function courses (){
+        return $this->belongsToMany(User::class);
+    }
+    public function tickets (){
+        return $this->hasMany(Tickets::class);
+    }
 }

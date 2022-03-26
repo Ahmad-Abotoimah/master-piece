@@ -1,7 +1,7 @@
 
 @extends('layouts.admin')
 @section('title')
-    <h4 class="page-title">Users</h4>
+    <h4 class="page-title">admins</h4>
 @endsection
 @section('admin')
     <style>
@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
-                            <a href={{route('user.create')}} class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add User</a>
+                            <a href={{route('admin.create')}} class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Admin</a>
                         </div>
                         <div class="col-sm-7">
                             <div class="text-sm-end d-flex justify-content-end " >
@@ -31,22 +31,22 @@
                                     <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog-outline"></i></button>
                                 </a>
                                 <span class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                                <a class="dropdown-item" href="{{ route('user.show',5) }}">
+                                                <a class="dropdown-item" href="{{ route('admin.show',5) }}">
                                                       5
                                                 </a>
-                                                <a class="dropdown-item" href="{{ route('user.show',10) }}">
+                                                <a class="dropdown-item" href="{{ route('admin.show',10) }}">
                                                       10
                                                 </a>
-                                                <a class="dropdown-item" href="{{ route('user.show',20) }}">
+                                                <a class="dropdown-item" href="{{ route('admin.show',20) }}">
                                                       20
                                                 </a>
-                                                <a class="dropdown-item" href="{{ route('user.show',50) }}">
+                                                <a class="dropdown-item" href="{{ route('admin.show',50) }}">
                                                       50
                                                 </a>
-                                                <a class="dropdown-item" href="{{ route('user.show',100) }}">
+                                                <a class="dropdown-item" href="{{ route('admin.show',100) }}">
                                                       100
                                                 </a>
-                                                <a class="dropdown-item" href="{{ route('user.show','all') }}">
+                                                <a class="dropdown-item" href="{{ route('admin.show','all') }}">
                                                       all
                                                 </a>
 
@@ -55,7 +55,7 @@
                                 <button type="button" class="btn btn-light mb-2" onclick="function PrintAss() {
                                                 window.print();
                                             }
-                                            PrintAss()"><i class="mdi mdi-arrow-collapse-down"></i>print</button>
+                                            PrintAss()"><i class="mdi mdi-arrow-collapse-down"></i> print</button>
                             </div>
                         </div><!-- end col-->
                     </div>
@@ -71,7 +71,7 @@
                                 {{--                                                </div>--}}
                                 {{--                                            </th>--}}
                                 <th>#</th>
-                                <th class="all">user</th>
+                                <th class="all">admin</th>
                                 <th>email</th>
                                 <th>phone</th>
                                 <th>Date Of Birth</th>
@@ -82,33 +82,33 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($users as $user)
+                            @foreach($admins as $admin)
                                 <tr>
-                                    <td>{{$user->id}}</td>
+                                    <td>{{$admin->id}}</td>
                                     <td>
                                         <img src={{"assets/images/userAvatar.png"}} alt="contact-img" title="contact-img" class="rounded me-3" height="48" />
                                         <p class="m-0 d-inline-block align-middle font-16">
-                                            <span>{{$user->name}}</span>
+                                            <span>{{$admin->name}}</span>
                                         </p>
                                     </td>
                                     <td>
-                                        {{$user->email}}
+                                        {{$admin->email}}
                                     </td>
                                     <td>
-                                        {{$user->phone?$user->phone:'not added'}}
+                                        {{$admin->phone?$admin->phone:'not added'}}
                                     </td>
                                     <td>
-                                        {{$user->date_of_birth?$user->date_of_birth:"not added"}}
+                                        {{$admin->date_of_birth?$admin->date_of_birth:"not added"}}
                                     </td>
 
                                     <td>
-                                        {{$user->major?$user->major:"student"}}
+                                        {{$admin->major?$admin->major:"student"}}
                                     </td>
                                     <td>
-                                        {{$user->Status?$user->status:"active"}}
+                                        {{$admin->Status?$admin->status:"active"}}
                                     </td>
                                     <td>
-                                        {{$user->created_at?$user->created_at:today}}
+                                        {{$admin->created_at?$admin->created_at:today}}
                                     </td>
 
                                     {{--                                            <td>--}}
@@ -116,9 +116,9 @@
                                     {{--                                            </td>--}}
 
                                     <td class="table-action">
-                                        <a href="{{route('user.edit',$user->id)}}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                        <a href="{{route('admin.edit',$admin->id)}}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
 
-                                        <form method="post" action="{{route('user.destroy',$user->id)}}">
+                                        <form method="post" action="{{route('admin.destroy',$admin->id)}}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" style="border: 0;background-color:#fff;"><i class="mdi mdi-delete"></i></button>
@@ -148,7 +148,7 @@
                 {{--                                                </div>--}}
                 {{--                                            </th>--}}
                 <th>#</th>
-                <th class="all">user</th>
+                <th class="all">admin</th>
                 <th>email</th>
                 <th>phone</th>
                 <th>Date Of Birth</th>
@@ -158,33 +158,33 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($users as $user)
+            @foreach($admins as $admin)
                 <tr>
-                    <td>{{$user->id}}</td>
+                    <td>{{$admin->id}}</td>
                     <td>
                         <img src={{"assets/images/userAvatar.png"}} alt="contact-img" title="contact-img" class="rounded me-3" height="48" />
                         <p class="m-0 d-inline-block align-middle font-16">
-                            <span>{{$user->name}}</span>
+                            <span>{{$admin->name}}</span>
                         </p>
                     </td>
                     <td>
-                        {{$user->email}}
+                        {{$admin->email}}
                     </td>
                     <td>
-                        {{$user->phone?$user->phone:'not added'}}
+                        {{$admin->phone?$admin->phone:'not added'}}
                     </td>
                     <td>
-                        {{$user->date_of_birth?$user->date_of_birth:"not added"}}
+                        {{$admin->date_of_birth?$admin->date_of_birth:"not added"}}
                     </td>
 
                     <td>
-                        {{$user->major?$user->major:"student"}}
+                        {{$admin->major?$admin->major:"student"}}
                     </td>
                     <td>
-                        {{$user->Status?$user->status:"active"}}
+                        {{$admin->Status?$admin->status:"active"}}
                     </td>
                     <td>
-                        {{$user->created_at?$user->created_at:today}}
+                        {{$admin->created_at?$admin->created_at:today}}
                     </td>
 
                     {{--                                            <td>--}}

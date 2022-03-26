@@ -8,6 +8,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class SingleCourseController extends Controller
 {
@@ -25,7 +26,7 @@ class SingleCourseController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -36,7 +37,7 @@ class SingleCourseController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -54,18 +55,29 @@ class SingleCourseController extends Controller
         $course = Cources::find($id);
         $tickets = Tickets::all()->where('course_id',$id)->count();
         $seats = $course->course_seats-$tickets;
+        $seats==0?$course->status = 'full':'';
         return view('frontend.courseDetails',['course'=>$course,'seats'=>$seats,'tickets'=>$tickets]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $num
+     *
      */
-    public function edit($id)
+    public function edit($filter)
     {
-        //
+        if($filter!=0){
+            if($filter=='adults' || $filter=='kids'){
+                $courses = Cources::all()->where('type',$filter);
+            }else{
+                $courses  = Cources::paginate($filter);
+            }
+            return view('frontend.courses',['courses'=>$courses]);
+        }else{
+            return redirect('singleCourse');
+        }
+
     }
 
     /**
@@ -73,7 +85,7 @@ class SingleCourseController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -84,7 +96,7 @@ class SingleCourseController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

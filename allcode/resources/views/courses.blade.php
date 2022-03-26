@@ -55,7 +55,7 @@
                                             <button type="button" class="btn btn-light mb-2" onclick="function PrintAss() {
                                                 window.print();
                                             }
-                                            PrintAss()">print</button>
+                                            PrintAss()"><i class="mdi mdi-arrow-collapse-down"></i>print</button>
                                         </div>
                                     </div><!-- end col-->
                                 </div>
@@ -159,7 +159,6 @@
                 <th>Seats</th>
                 <th>from</th>
                 <th>to</th>
-                <th style="width: 85px;">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -198,15 +197,7 @@
                     {{--                                                <span class="badge bg-success">Active</span>--}}
                     {{--                                            </td>--}}
 
-                    <td class="table-action">
-                        <a href="{{route('course.edit',$course->id)}}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-
-                        <form method="post" action="{{route('course.destroy',$course->id)}}">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" style="border: 0;background-color:#fff;"><i class="mdi mdi-delete"></i></button>
-                        </form>
-                    </td>
+                   
                 </tr>
             @endforeach
 
